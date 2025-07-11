@@ -64,7 +64,7 @@ const Header: React.FC = () => {
               className="hidden md:inline-flex"
               asChild
             >
-              <Link to="/courses">Khóa học</Link>
+              <Link to="/courses">Danh Mục Khóa Học</Link>
             </Button>
             <Button
               variant="ghost"
@@ -72,20 +72,22 @@ const Header: React.FC = () => {
               className="hidden lg:inline-flex"
               asChild
             >
-              <Link to="/categories">Danh mục</Link>
+              {/* <Link to="/categories">Danh mục</Link> */}
             </Button>
             
             <div className="flex items-center space-x-2">
-              <Button variant="ghost" size="icon" className="relative">
-                <Heart className="h-5 w-5" />
-                {favoritesCount > 0 && (
-                  <Badge 
-                    variant="destructive" 
-                    className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 text-xs flex items-center justify-center"
-                  >
-                    {favoritesCount}
-                  </Badge>
-                )}
+              <Button variant="ghost" className="relative" asChild>
+                <Link to="/favorites">
+                  <span className="text-sm font-medium">Khóa học yêu thích</span>
+                  {favoritesCount > 0 && (
+                    <Badge 
+                      variant="destructive" 
+                      className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 text-xs flex items-center justify-center"
+                    >
+                      {favoritesCount}
+                    </Badge>
+                  )}
+                </Link>
               </Button>
               
               {isAuthenticated ? (

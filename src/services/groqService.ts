@@ -281,5 +281,31 @@ Trả về kết quả dưới dạng JSON array với format chính xác:
     }
 
     return suggestions.sort((a, b) => b.confidence - a.confidence).slice(0, 5);
+  },
+
+  // Chat completion cho chatbot
+  chatCompletion: async (prompt: string): Promise<string> => {
+    try {
+      const completion = await groq.chat.completions.create({
+        messages: [
+          {
+            role: "system",
+            content: "Bạn là một AI assistant chuyên tư vấn khóa học trực tuyến. Hãy trả lời một cách thân thiện, chuyên nghiệp và hữu ích."
+          },
+          {
+            role: "user",
+            content: prompt
+          }
+        ],
+        model: "llama3-8b-8192",
+        temperature: 0.7,
+        max_tokens: 500
+      });
+
+      return completion.choices[0]?.message?.content || '';
+    } catch (error) {
+      console.error('Error in chat completion:', error);
+      throw error;
+    }
   }
 };

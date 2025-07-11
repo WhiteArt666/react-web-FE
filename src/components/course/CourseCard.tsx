@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Course } from '../../types';
 import { useFavorites } from '../../contexts/FavoritesContext';
 import { useAuth } from '../../contexts/AuthContext';
+import { useToast } from '../../contexts/ToastContext';
 import { courseService } from '../../services/courseService';
 import { formatPrice, formatDuration } from '../../lib/utils';
 import { Card, CardContent, CardFooter, CardHeader } from '../ui/card';
@@ -19,19 +20,23 @@ interface CourseCardProps {
 const CourseCard: React.FC<CourseCardProps> = ({ course, onCourseClick, viewMode = 'grid' }) => {
   const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
   const { user } = useAuth();
+  const { showToast } = useToast();
   const navigate = useNavigate();
   const isCourseFavorite = isFavorite(course.id);
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.stopPropagation();
+    
     if (isCourseFavorite) {
       removeFromFavorites(course.id);
+      showToast(`Đã xóa "${course.title}" khỏi danh sách yêu thích`, 'success', 2500);
       // Lưu hành vi unfavorite
       if (user) {
         courseService.saveUserBehavior(user.id, 'unfavorite', course.id);
       }
     } else {
       addToFavorites(course);
+      showToast(`Đã thêm "${course.title}" vào danh sách yêu thích! 💕`, 'success', 2500);
       // Lưu hành vi favorite
       if (user) {
         courseService.saveUserBehavior(user.id, 'favorite', course.id);
