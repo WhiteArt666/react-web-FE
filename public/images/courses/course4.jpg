@@ -1,0 +1,8 @@
+<!-- Placeholder SVG for JavaScript course -->
+<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="300" height="200" fill="#F7DF1E"/>
+  <rect x="50" y="50" width="200" height="100" fill="#323330" rx="10"/>
+  <text x="150" y="85" text-anchor="middle" fill="#F7DF1E" font-family="Arial, sans-serif" font-size="16" font-weight="bold">JavaScript</text>
+  <text x="150" y="105" text-anchor="middle" fill="#F7DF1E" font-family="Arial, sans-serif" font-size="14" font-weight="bold">ES6+</text>
+  <text x="150" y="125" text-anchor="middle" fill="#F7DF1E" font-family="Arial, sans-serif" font-size="12">Programming</text>
+</svg>
