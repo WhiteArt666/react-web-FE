@@ -33,6 +33,9 @@ const CoursesPage: React.FC = () => {
   }));
 
   useEffect(() => {
+    // Scroll to top when component mounts
+    window.scrollTo(0, 0);
+    
     // Load all courses initially
     searchCourses({
       query: '',

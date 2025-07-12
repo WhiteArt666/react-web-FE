@@ -23,6 +23,8 @@ const CategoryPage: React.FC = () => {
 
   // Load courses khi component mount
   useEffect(() => {
+    // Scroll to top when component mounts
+    window.scrollTo(0, 0);
     loadAllCourses();
   }, [loadAllCourses]);
 

@@ -1,0 +1,181 @@
+/* AI Recommendations Layout Optimization */
+
+.ai-recommendations-container {
+  max-width: 100%;
+  overflow-x: hidden;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.ai-recommendations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .ai-recommendations-grid {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .ai-recommendations-grid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 1280px) {
+  .ai-recommendations-grid {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 1200px;
+  }
+}
+
+.ai-course-item {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.ai-course-card {
+  width: 100%;
+  flex: 1;
+}
+
+/* AI suggestion text styling */
+.ai-course-item p {
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+}
+
+.ai-recommendation-reason {
+  margin-top: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: fit-content;
+}
+
+.ai-recommendation-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.ai-recommendation-text {
+  flex: 1;
+  min-width: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.ai-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.ai-empty-state {
+  max-width: 900px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.ai-empty-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  max-width: 800px;
+  margin: 1.5rem auto 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .ai-recommendations-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0 0.5rem;
+  }
+  
+  .ai-stats-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .ai-empty-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    padding: 0 0.5rem;
+  }
+  
+  .ai-course-item {
+    margin: 0;
+  }
+}
+
+/* Prevent overflow issues */
+.ai-text-content {
+  word-break: break-word;
+  hyphens: auto;
+  line-height: 1.5;
+}
+
+/* Smooth transitions */
+.ai-course-item {
+  transition: transform 0.1s ease;
+}
+
+.ai-recommendation-reason {
+  transition: background-color 0.1s ease;
+}
+
+/* Ensure proper card sizing */
+.ai-course-card > * {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Container spacing */
+.ai-recommendations-container > .space-y-6 > * + * {
+  margin-top: 1.5rem;
+}
+
+/* Performance optimization */
+.ai-course-item {
+  contain: layout style;
+}
+
+/* Ensure consistent card heights in grid */
+.ai-recommendations-grid .ai-course-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.ai-recommendations-grid .ai-course-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.ai-recommendations-grid .ai-course-card > * {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}

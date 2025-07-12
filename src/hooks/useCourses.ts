@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Course, SearchFilters } from '../types';
 import { courseService } from '../services/courseService';
 
@@ -60,6 +60,11 @@ export const useCourses = () => {
       setLoading(false);
     }
   }, []);
+
+  // Auto-load all courses on hook initialization
+  useEffect(() => {
+    loadAllCourses();
+  }, [loadAllCourses]);
 
   return {
     courses,

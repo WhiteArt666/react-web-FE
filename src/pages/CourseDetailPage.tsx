@@ -37,6 +37,8 @@ const CourseDetailPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'overview' | 'curriculum' | 'instructor' | 'reviews'>('overview');
 
   useEffect(() => {
+    // Scroll to top when component mounts
+    window.scrollTo(0, 0);
     if (!courseId) {
       navigate('/courses');
       return;

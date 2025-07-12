@@ -22,18 +22,18 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({ courses, onCatego
       // Categories animation
       if (categoriesRef.current) {
         gsap.fromTo(categoriesRef.current.querySelectorAll('.category-card'), 
-          { opacity: 0, y: 30, rotationY: 45 },
+          { opacity: 0, y: 15, rotationY: 15 },
           { 
             opacity: 1, 
             y: 0, 
             rotationY: 0,
-            duration: 0.5,
-            stagger: 0.05,
+            duration: 0.2,
+            stagger: 0.02,
             ease: "power2.out",
             scrollTrigger: {
               trigger: categoriesRef.current,
-              start: "top 70%",
-              end: "bottom 20%",
+              start: "top 85%",
+              end: "bottom 40%",
               toggleActions: "play none none reverse"
             }
           }
@@ -109,7 +109,7 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({ courses, onCatego
           ))}
         </div>
         
-        {/* Additional category info */}
+        {/* Additional category info
         <div className="mt-12 text-center">
           <p className="text-muted-foreground mb-4">
             🎯 Chọn danh mục phù hợp với mục tiêu học tập của bạn
@@ -121,7 +121,7 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({ courses, onCatego
               </Badge>
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );

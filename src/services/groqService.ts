@@ -66,17 +66,18 @@ ${instructions}
 Danh sách khóa học có sẵn:
 ${JSON.stringify(coursesContext, null, 2)}
 
-YÊU CẦU:
-1. Trả về chính xác 5 khóa học
-2. Mỗi lý do gợi ý phải chi tiết, thuyết phục, giải thích lợi ích cụ thể
-3. Đa dạng về lĩnh vực và cấp độ
-4. Ưu tiên khóa học có rating và review tốt
-5. CHỈ trả về JSON array, KHÔNG thêm text giải thích
+YÊU CẦU QUAN TRỌNG:
+1. CHỈ sử dụng courseId từ danh sách khóa học có sẵn ở trên (id field)
+2. Trả về chính xác 5 khóa học từ danh sách
+3. Mỗi lý do gợi ý phải chi tiết, thuyết phục, giải thích lợi ích cụ thể
+4. Đa dạng về lĩnh vực và cấp độ
+5. Ưu tiên khóa học có rating và review tốt
+6. CHỈ trả về JSON array, KHÔNG thêm text giải thích
 
 Trả về kết quả dưới dạng JSON array với format chính xác:
 [
   {
-    "courseId": "id_khoa_hoc",
+    "courseId": "id_chính_xác_từ_danh_sách_trên",
     "title": "tên khóa học",
     "category": "danh mục",
     "level": "cấp độ",
@@ -133,19 +134,48 @@ Trả về kết quả dưới dạng JSON array với format chính xác:
         // Thử parse JSON response
         const suggestions = JSON.parse(jsonStr);
         
-        // Validate format
+        // Validate format và kiểm tra course IDs có tồn tại
         if (Array.isArray(suggestions) && suggestions.length > 0) {
+          const availableCourseIds = availableCourses.map(c => c.id);
+          
           const validSuggestions = suggestions
             .filter(s => s.courseId && s.title && s.reason)
-            .map(s => ({
-              courseId: s.courseId,
-              title: s.title,
-              category: s.category,
-              level: s.level,
-              reason: s.reason,
-              confidence: s.confidence || 0.8,
-              tags: s.tags || []
-            }))
+            .map(s => {
+              // Kiểm tra courseId có tồn tại trong availableCourses không
+              const courseExists = availableCourseIds.includes(s.courseId);
+              if (!courseExists) {
+                console.log(`⚠️ Course ID ${s.courseId} không tồn tại, tìm course tương tự...`);
+                // Tìm course tương tự based on title hoặc category
+                const similarCourse = availableCourses.find(c => 
+                  c.title.toLowerCase().includes(s.title.toLowerCase().split(' ')[0]) ||
+                  c.category.toLowerCase() === s.category.toLowerCase()
+                );
+                if (similarCourse) {
+                  console.log(`✅ Mapped to existing course: ${similarCourse.id}`);
+                  return {
+                    courseId: similarCourse.id,
+                    title: similarCourse.title,
+                    category: similarCourse.category,
+                    level: similarCourse.level,
+                    reason: s.reason,
+                    confidence: s.confidence || 0.8,
+                    tags: s.tags || []
+                  };
+                }
+                return null; // Skip invalid course
+              }
+              
+              return {
+                courseId: s.courseId,
+                title: s.title,
+                category: s.category,
+                level: s.level,
+                reason: s.reason,
+                confidence: s.confidence || 0.8,
+                tags: s.tags || []
+              };
+            })
+            .filter((item): item is AICourseSuggestion => item !== null) // Remove null entries and fix typing
             .slice(0, 5);
           
           if (validSuggestions.length > 0) {
