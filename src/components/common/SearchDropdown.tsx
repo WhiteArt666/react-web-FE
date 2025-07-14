@@ -113,7 +113,7 @@ const SearchDropdown: React.FC<SearchDropdownProps> = ({ onClose }) => {
   };
 
   const handleCourseClick = (course: Course) => {
-    navigate(`/courses/${course.id}`);
+    navigate(`/course/${course.id}`);
     setIsOpen(false);
     setQuery('');
     onClose?.();

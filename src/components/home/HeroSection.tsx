@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 import { Card, CardContent } from '../ui/card';
@@ -12,10 +12,12 @@ const HeroSection: React.FC = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  
   const slides = [
-    'https://images.unsplash.com/photo-1516321310762-479a676118d8?auto=format&fit=crop&w=1920&q=80',
-    'https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=1920&q=80',
-    'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1920&q=80',
+    '/images/courses/20250212_BWEjSujucS.jpeg',
+    '/images/courses/20250212_BWEjSujucS.jpeg',
+    '/images/courses/20250212_BWEjSujucS.jpeg',
   ];
 
   useEffect(() => {
@@ -42,19 +44,15 @@ const HeroSection: React.FC = () => {
           { opacity: 1, y: 0, duration: 0.8, delay: 0.6, ease: "power2.out" }
         );
 
-        // Slider animation
+        // Slider animation - chỉ animate scale, không animate opacity
         if (sliderRef.current) {
           const slideImages = sliderRef.current.querySelectorAll('.slide-image');
           gsap.fromTo(slideImages, 
-            { opacity: 0, scale: 1.2 },
+            { scale: 1.2 },
             { 
-              opacity: 1, 
               scale: 1, 
               duration: 1.5, 
-              stagger: 5, 
-              ease: "power2.out",
-              repeat: -1,
-              repeatDelay: 2
+              ease: "power2.out"
             }
           );
         }
@@ -82,17 +80,9 @@ const HeroSection: React.FC = () => {
       }
     });
 
-    // Auto-slide functionality
-    let currentSlide = 0;
+    // Auto-slide functionality với state
     const interval = setInterval(() => {
-      if (sliderRef.current) {
-        const slideImages = sliderRef.current.querySelectorAll('.slide-image');
-        slideImages.forEach((slide, index) => {
-          slide.classList.toggle('opacity-0', index !== currentSlide);
-          slide.classList.toggle('opacity-100', index === currentSlide);
-        });
-        currentSlide = (currentSlide + 1) % slides.length;
-      }
+      setCurrentSlideIndex((prevIndex) => (prevIndex + 1) % slides.length);
     }, 7000);
 
     return () => {
@@ -106,15 +96,6 @@ const HeroSection: React.FC = () => {
     { value: '500,000+', label: 'Học viên', icon: Users, color: 'from-green-500 to-green-600' },
     { value: '1,000+', label: 'Giảng viên', icon: Star, color: 'from-yellow-500 to-yellow-600' },
     { value: '50+', label: 'Danh mục', icon: TrendingUp, color: 'from-purple-500 to-purple-600' },
-  ];
-
-  const achievementBadges = [
-    { icon: Trophy, label: 'Top Rated', color: 'bg-yellow-500' },
-    { icon: Award, label: 'Best Seller', color: 'bg-purple-500' },
-    { icon: Zap, label: 'Fast Track', color: 'bg-blue-500' },
-    { icon: Target, label: 'Goal Oriented', color: 'bg-green-500' },
-    { icon: Brain, label: 'AI Powered', color: 'bg-pink-500' },
-    { icon: Rocket, label: 'Accelerated', color: 'bg-orange-500' },
   ];
 
   return (
@@ -162,18 +143,6 @@ const HeroSection: React.FC = () => {
               </Button>
             </div>
             
-            {/* Achievement Badges - responsive grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-2 sm:gap-3 pt-4 sm:pt-6">
-              {achievementBadges.map((badge, index) => {
-                const Icon = badge.icon;
-                return (
-                  <Badge key={index} className={`${badge.color}/90 backdrop-blur-sm text-white border-0 px-2 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium shadow-sm hover:scale-105 transition-transform duration-200 flex items-center justify-center`}>
-                    <Icon className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-                    <span className="truncate">{badge.label}</span>
-                  </Badge>
-                );
-              })}
-            </div>
           </div>
           
           <div ref={sliderRef} className="relative w-full h-[300px] sm:h-[400px] lg:h-[500px] xl:h-[600px] rounded-xl sm:rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300 order-1 lg:order-2">
@@ -181,7 +150,7 @@ const HeroSection: React.FC = () => {
               <div
                 key={index}
                 className={`slide-image absolute inset-0 w-full h-full transition-opacity duration-1000 ${
-                  index === 0 ? 'opacity-100' : 'opacity-0'
+                  index === currentSlideIndex ? 'opacity-100' : 'opacity-0'
                 }`}
                 style={{
                   backgroundImage: `url(${slide})`,

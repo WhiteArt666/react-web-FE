@@ -28,6 +28,12 @@ const CourseDetailPage: React.FC = () => {
   
   const [activeTab, setActiveTab] = useState<'overview' | 'curriculum' | 'instructor' | 'reviews'>('overview');
 
+  // Debug logging
+  console.log('CourseDetailPage - courseId:', courseId);
+  console.log('CourseDetailPage - course:', course);
+  console.log('CourseDetailPage - loading:', loading);
+  console.log('CourseDetailPage - error:', error);
+
   useEffect(() => {
     // Scroll to top when component mounts
     window.scrollTo(0, 0);
