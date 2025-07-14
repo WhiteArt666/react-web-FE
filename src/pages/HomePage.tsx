@@ -47,7 +47,7 @@ const HomePage: React.FC = () => {
       
       <HeroSection />
       
-      <SearchSection onSearch={handleSearch} loading={loading} />
+      {/* <SearchSection onSearch={handleSearch} loading={loading} /> */}
       
       {/* <FeatureHighlights /> */}
       

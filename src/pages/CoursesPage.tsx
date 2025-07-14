@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Course } from '../types';
 import { useCourses } from '../hooks/useCourses';
 import { useAuth } from '../contexts/AuthContext';
@@ -14,9 +15,11 @@ import {
 const CoursesPage: React.FC = () => {
   const { user } = useAuth();
   const { courses, loading, searchCourses, loadPopularCourses } = useCourses();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [showFilters, setShowFilters] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [currentQuery, setCurrentQuery] = useState('');
 
   // Categories for filtering
   const categories = [
@@ -38,25 +41,56 @@ const CoursesPage: React.FC = () => {
     // Scroll to top when component mounts
     window.scrollTo(0, 0);
     
-    // Load all courses initially
-    searchCourses({
-      query: '',
-      category: '',
-      level: [],
-      priceRange: [0, 2000000],
+    // Get query parameters
+    const query = searchParams.get('q') || '';
+    const category = searchParams.get('category') || '';
+    const level = searchParams.get('level') || '';
+    const popular = searchParams.get('popular') === 'true';
+    
+    // Set current state
+    setCurrentQuery(query);
+    setSelectedCategory(category);
+    
+    // Build search filters based on URL params
+    const filters = {
+      query,
+      category,
+      level: level ? [level] : [],
+      priceRange: [0, 2000000] as [number, number],
       rating: 0,
-      sortBy: 'relevance',
-    });
-  }, [searchCourses]);
+      sortBy: popular ? 'popular' : 'relevance' as 'relevance' | 'rating' | 'price_low' | 'price_high' | 'newest' | 'popular',
+    };
+    
+    // Search with filters
+    searchCourses(filters);
+  }, [searchCourses, searchParams]);
 
   const handleSearch = (filters: any) => {
+    // Update URL params
+    const newSearchParams = new URLSearchParams();
+    if (filters.query) newSearchParams.set('q', filters.query);
+    if (filters.category) newSearchParams.set('category', filters.category);
+    if (filters.level && filters.level.length > 0) newSearchParams.set('level', filters.level[0]);
+    if (filters.sortBy === 'popular') newSearchParams.set('popular', 'true');
+    
+    setSearchParams(newSearchParams);
     searchCourses(filters);
   };
 
   const handleCategoryFilter = (category: string) => {
     setSelectedCategory(category);
+    
+    // Update URL params
+    const newSearchParams = new URLSearchParams(searchParams);
+    if (category) {
+      newSearchParams.set('category', category);
+    } else {
+      newSearchParams.delete('category');
+    }
+    setSearchParams(newSearchParams);
+    
     searchCourses({
-      query: '',
+      query: currentQuery,
       category,
       level: [],
       priceRange: [0, 2000000],
@@ -66,9 +100,18 @@ const CoursesPage: React.FC = () => {
   };
 
   const handleQuickFilter = (sortBy: string) => {
+    // Update URL params
+    const newSearchParams = new URLSearchParams(searchParams);
+    if (sortBy === 'popular') {
+      newSearchParams.set('popular', 'true');
+    } else {
+      newSearchParams.delete('popular');
+    }
+    setSearchParams(newSearchParams);
+    
     searchCourses({
-      query: '',
-      category: '',
+      query: currentQuery,
+      category: selectedCategory,
       level: [],
       priceRange: [0, 2000000],
       rating: 0,
@@ -77,6 +120,12 @@ const CoursesPage: React.FC = () => {
   };
 
   const handleClearCategory = () => {
+    // Clear URL params
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.delete('category');
+    newSearchParams.delete('level');
+    setSearchParams(newSearchParams);
+    
     handleCategoryFilter('');
   };
 
@@ -109,6 +158,18 @@ const CoursesPage: React.FC = () => {
 
           {/* Course List */}
           <div className="lg:w-3/4">
+            {/* Search Results Header */}
+            {currentQuery && (
+              <div className="mb-6 p-4 bg-white rounded-lg border shadow-sm">
+                <h2 className="text-lg font-semibold mb-2">
+                  Kết quả tìm kiếm cho "{currentQuery}"
+                </h2>
+                <p className="text-muted-foreground">
+                  Tìm thấy {courses.length} khóa học phù hợp
+                </p>
+              </div>
+            )}
+            
             {/* View Toggle and Results Count */}
             <CoursesResultsHeader
               coursesCount={courses.length}
