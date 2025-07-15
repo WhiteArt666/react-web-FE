@@ -8,7 +8,7 @@ import CourseGrid from '../components/course/CourseGrid';
 import { Card, CardContent } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';
-import { ArrowLeft, BookOpen, Users, Star, Filter } from 'lucide-react';
+import { ArrowLeft, BookOpen, Users, Star, Filter, Grid, List } from 'lucide-react';
 
 const CategoryPage: React.FC = () => {
   const { categoryName } = useParams<{ categoryName: string }>();
@@ -16,6 +16,7 @@ const CategoryPage: React.FC = () => {
   const { courses, loading, searchCourses, loadAllCourses } = useCourses();
   const [filteredCourses, setFilteredCourses] = useState<Course[]>([]);
   const [sortBy, setSortBy] = useState('popular');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
   // Decode the category name từ URL
   const decodedCategoryName = categoryName ? decodeURIComponent(categoryName) : '';
@@ -179,7 +180,7 @@ const CategoryPage: React.FC = () => {
               <SearchBar onSearch={handleSearch} loading={loading} />
             </div>
             
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 flex-wrap">
               <Badge variant="outline" className="text-sm">
                 <Filter className="w-4 h-4 mr-2" />
                 Sắp xếp theo
@@ -195,16 +196,35 @@ const CategoryPage: React.FC = () => {
                 <option value="price-low">Giá thấp</option>
                 <option value="price-high">Giá cao</option>
               </select>
+              
+              <div className="flex items-center border rounded-md">
+                <Button
+                  variant={viewMode === 'grid' ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={() => setViewMode('grid')}
+                  className="rounded-r-none"
+                >
+                  <Grid className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant={viewMode === 'list' ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={() => setViewMode('list')}
+                  className="rounded-l-none"
+                >
+                  <List className="w-4 h-4" />
+                </Button>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Courses Section */}
-      <section className="py-16 bg-background">
+      <section className="py-8 sm:py-16 bg-background">
         <div className="container mx-auto px-4">
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold mb-2">
+          <div className="mb-6 sm:mb-8">
+            <h2 className="text-xl sm:text-2xl font-bold mb-2">
               Khóa học {currentCategory.name}
             </h2>
             <p className="text-muted-foreground">
@@ -215,6 +235,7 @@ const CategoryPage: React.FC = () => {
           <CourseGrid 
             courses={filteredCourses} 
             loading={loading}
+            viewMode={viewMode}
           />
         </div>
       </section>

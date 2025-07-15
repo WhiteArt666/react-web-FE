@@ -173,10 +173,14 @@ const SearchDropdown: React.FC<SearchDropdownProps> = ({ onClose }) => {
 
       {/* Search Dropdown */}
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-background border rounded-md shadow-lg z-[60] max-h-96 overflow-y-auto">
+        <div className="absolute top-full mt-2 bg-background border rounded-md shadow-lg z-[60] max-h-96 overflow-y-auto 
+                      left-0 right-0 
+                      md:left-0 md:right-0 
+                      sm:fixed sm:left-4 sm:right-4 sm:top-[60px] 
+                      max-sm:fixed max-sm:left-2 max-sm:right-2 max-sm:top-[60px]">
           {/* Search Results */}
           {query && (
-            <div className="p-3">
+            <div className="p-3 sm:p-2">
               <div className="flex items-center justify-between mb-2">
                 <h3 className="text-sm font-medium">Kết quả tìm kiếm</h3>
                 <Button
@@ -211,7 +215,7 @@ const SearchDropdown: React.FC<SearchDropdownProps> = ({ onClose }) => {
                         <div className="flex items-center space-x-2 text-xs text-muted-foreground">
                           <span className="flex items-center">
                             <User className="w-3 h-3 mr-1" />
-                            <span className="truncate max-w-20 sm:max-w-none">{course.instructor}</span>
+                            <span className="truncate max-w-16 sm:max-w-20 md:max-w-none">{course.instructor}</span>
                           </span>
                           <span className="hidden sm:flex items-center">
                             <Clock className="w-3 h-3 mr-1" />
@@ -242,7 +246,7 @@ const SearchDropdown: React.FC<SearchDropdownProps> = ({ onClose }) => {
 
           {/* Recent Searches */}
           {!query && recentSearches.length > 0 && (
-            <div className="p-3 border-t">
+            <div className="p-3 sm:p-2 border-t">
               <div className="flex items-center justify-between mb-2">
                 <h3 className="text-sm font-medium">Tìm kiếm gần đây</h3>
                 <Button
@@ -271,7 +275,7 @@ const SearchDropdown: React.FC<SearchDropdownProps> = ({ onClose }) => {
 
           {/* Quick Actions */}
           {!query && (
-            <div className="p-3 border-t">
+            <div className="p-3 sm:p-2 border-t">
               <h3 className="text-sm font-medium mb-2">Khám phá</h3>
               <div className="space-y-1">
                 <Link
@@ -295,7 +299,7 @@ const SearchDropdown: React.FC<SearchDropdownProps> = ({ onClose }) => {
           )}
 
           {/* Search Button */}
-          <div className="p-3 border-t">
+          <div className="p-3 sm:p-2 border-t">
             <Button
               className="w-full"
               onClick={() => handleSearch(query)}

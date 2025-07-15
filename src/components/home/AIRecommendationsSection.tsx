@@ -6,7 +6,7 @@ import AIRecommendations from '../common/AIRecommendations';
 
 const AIRecommendationsSection: React.FC = () => {
   return (
-    <section className="py-16 bg-gradient-to-br from-purple-50 to-blue-50 relative overflow-hidden">
+    <section className="py-16 bg-gradient-to-br from-purple-50 to-blue-50 relative overflow-hidden" data-section="ai-recommendations">
       {/* Enhanced background */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-purple-100/30 to-blue-100/30"></div>

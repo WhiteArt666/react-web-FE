@@ -13,6 +13,16 @@ const HeroSection: React.FC = () => {
   const statsRef = useRef<HTMLDivElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+
+  const scrollToAIRecommendations = () => {
+    const aiSection = document.querySelector('[data-section="ai-recommendations"]');
+    if (aiSection) {
+      aiSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
   
   const slides = [
     '/images/courses/20250212_BWEjSujucS.jpeg',
@@ -137,8 +147,8 @@ const HeroSection: React.FC = () => {
                 <Play className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-3 relative z-10" />
                 <span className="relative z-10 font-semibold">Bắt đầu học ngay</span>
               </Button>
-              <Button variant="outline" size="lg" className="text-base sm:text-lg px-6 sm:px-10 py-4 sm:py-7 border-2 border-primary/20 hover:bg-white/10 backdrop-blur-sm group shadow-sm hover:shadow-md transition-all duration-300">
-                <span className="group-hover:translate-x-1 transition-transform duration-200 font-semibold">Khám phá khóa học</span>
+              <Button variant="outline" size="lg" className="text-base sm:text-lg px-6 sm:px-10 py-4 sm:py-7 border-2 border-primary/20 hover:bg-white/10 backdrop-blur-sm group shadow-sm hover:shadow-md transition-all duration-300" onClick={scrollToAIRecommendations}>
+                <span className="group-hover:translate-x-1 transition-transform duration-200 font-semibold">Nhận gợi ý từ AI</span>
                 <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 ml-2 sm:ml-3 group-hover:translate-x-1 transition-transform duration-200" />
               </Button>
             </div>

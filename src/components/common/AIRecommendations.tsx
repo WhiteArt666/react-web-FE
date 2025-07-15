@@ -124,14 +124,14 @@ Check console for full details.`);
               </div>
             </div>
             <div className="flex gap-2">
-              <Button
+              {/* <Button
                 variant="outline"
                 size="sm"
                 onClick={handleDebugUserBehavior}
                 className="text-xs"
               >
                 Debug Data
-              </Button>
+              </Button> */}
               <Button
                 onClick={handleGetRecommendations}
                 disabled={loading || coursesLoading || courses.length === 0}

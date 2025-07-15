@@ -143,7 +143,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onCourseClick, viewMode
           </h3>
         </CardHeader>
 
-        <CardContent className="pt-0 flex-1">
+        <CardContent className="pt-0 flex-1 pb-4">
           <p className="text-sm text-muted-foreground line-clamp-3 mb-4">
             {course.description}
           </p>
@@ -165,7 +165,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onCourseClick, viewMode
             </div>
           </div>
           
-          <div className="flex flex-wrap gap-1 mb-4">
+          <div className="flex flex-wrap gap-1 mb-2">
             {course.tags.slice(0, 3).map((tag, index) => (
               <Badge key={index} variant="secondary" className="text-xs px-2 py-1">
                 {tag}
@@ -174,25 +174,27 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onCourseClick, viewMode
           </div>
         </CardContent>
 
-        <CardFooter className="pt-0 flex items-center justify-between">
-          <div className="flex flex-col">
-            {course.originalPrice && (
-              <span className="text-sm text-muted-foreground line-through">
-                {formatPrice(course.originalPrice)}
+        <CardFooter className="pt-3 pb-4 flex flex-col gap-3">
+          <div className="flex items-center justify-between w-full">
+            <div className="flex flex-col">
+              {course.originalPrice && (
+                <span className="text-sm text-muted-foreground line-through">
+                  {formatPrice(course.originalPrice)}
+                </span>
+              )}
+              <span className="text-lg font-bold text-primary">
+                {formatPrice(course.price)}
               </span>
-            )}
-            <span className="text-lg font-bold text-primary">
-              {formatPrice(course.price)}
-            </span>
+            </div>
+            
+            <Button 
+              size="sm" 
+              className="bg-gradient-to-r from-primary-600 to-purple-600 hover:from-primary-700 hover:to-purple-700 text-white shadow-md hover:shadow-lg transition-all duration-200 flex-shrink-0"
+            >
+              <BookOpen className="w-4 h-4 mr-1" />
+              <span className="whitespace-nowrap">Xem chi tiết</span>
+            </Button>
           </div>
-          
-          <Button 
-            size="sm" 
-            className="bg-gradient-to-r from-primary-600 to-purple-600 hover:from-primary-700 hover:to-purple-700 text-white shadow-md hover:shadow-lg transition-all duration-200"
-          >
-            <BookOpen className="w-4 h-4 mr-2" />
-            Đăng ký
-          </Button>
         </CardFooter>
       </Card>
     );
@@ -204,8 +206,8 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onCourseClick, viewMode
       className="group cursor-pointer transition-all duration-300 hover:shadow-lg overflow-hidden"
       onClick={handleCourseClick}
     >
-      <div className="flex">
-        <div className="relative w-64 flex-shrink-0">
+      <div className="flex flex-col sm:flex-row">
+        <div className="relative w-full sm:w-48 md:w-56 lg:w-64 flex-shrink-0">
           <div className="aspect-video w-full overflow-hidden">
             <img 
               src={course.thumbnail} 
@@ -225,9 +227,9 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onCourseClick, viewMode
           )}
         </div>
 
-        <div className="flex-1 p-6">
+        <div className="flex-1 p-4 sm:p-6 flex flex-col">
           <div className="flex items-start justify-between mb-2">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <Badge variant="outline" className="text-xs">
                 {course.category}
               </Badge>
@@ -238,7 +240,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onCourseClick, viewMode
             <Button 
               variant="ghost"
               size="icon"
-              className={`w-9 h-9 rounded-full transition-all duration-200 ${
+              className={`w-9 h-9 rounded-full transition-all duration-200 flex-shrink-0 ${
                 isCourseFavorite 
                   ? 'text-red-500 hover:bg-red-50' 
                   : 'text-gray-400 hover:text-red-500 hover:bg-red-50'
@@ -249,18 +251,18 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onCourseClick, viewMode
             </Button>
           </div>
           
-          <h3 className="font-semibold text-xl mb-2 group-hover:text-primary transition-colors">
+          <h3 className="font-semibold text-lg sm:text-xl mb-2 group-hover:text-primary transition-colors line-clamp-2">
             {course.title}
           </h3>
           
-          <p className="text-gray-600 mb-3 line-clamp-2">
+          <p className="text-gray-600 mb-3 line-clamp-2 text-sm sm:text-base">
             {course.description}
           </p>
           
-          <div className="flex items-center gap-6 text-sm text-gray-500 mb-4">
+          <div className="flex flex-wrap items-center gap-3 sm:gap-6 text-sm text-gray-500 mb-4">
             <div className="flex items-center gap-1">
               <User className="w-4 h-4" />
-              <span>{course.instructor}</span>
+              <span className="truncate max-w-24 sm:max-w-none">{course.instructor}</span>
             </div>
             <div className="flex items-center gap-1">
               <Clock className="w-4 h-4" />
@@ -273,28 +275,28 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onCourseClick, viewMode
             </div>
           </div>
 
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="text-2xl font-bold text-primary">
+          <div className="flex flex-col gap-3 mt-auto">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-xl sm:text-2xl font-bold text-primary">
                 {formatPrice(course.price)}
               </span>
               {course.originalPrice && course.originalPrice > course.price && (
-                <span className="text-sm text-gray-500 line-through">
+                <span className="text-sm text-gray-500 line-through whitespace-nowrap">
                   {formatPrice(course.originalPrice)}
                 </span>
               )}
               {course.originalPrice && course.originalPrice > course.price && (
-                <Badge variant="destructive" className="text-xs">
+                <Badge variant="destructive" className="text-xs flex-shrink-0">
                   -{Math.round((1 - course.price / course.originalPrice) * 100)}%
                 </Badge>
               )}
             </div>
             
             <Button 
-              className="bg-gradient-to-r from-primary-600 to-purple-600 hover:from-primary-700 hover:to-purple-700 text-white shadow-md hover:shadow-lg transition-all duration-200"
+              className="bg-gradient-to-r from-primary-600 to-purple-600 hover:from-primary-700 hover:to-purple-700 text-white shadow-md hover:shadow-lg transition-all duration-200 w-full sm:w-auto whitespace-nowrap px-4 py-2 self-start"
             >
               <BookOpen className="w-4 h-4 mr-2" />
-              Đăng ký
+              Xem chi tiết
             </Button>
           </div>
         </div>
