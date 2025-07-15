@@ -23,7 +23,7 @@ const PopularCoursesSection: React.FC<PopularCoursesSectionProps> = ({
   const displayedCourses = courses.slice(0, 12);
   const hasMoreCourses = courses.length > 12;
   return (
-    <section className="py-16 bg-background relative overflow-hidden">
+    <section className="py-16 bg-background relative overflow-hidden" data-section="ai-popular-courses">
       {/* Background decoration */}
       <div className="absolute inset-0">
         <div className="absolute top-10 right-10 w-32 h-32 bg-orange-200/20 rounded-full blur-2xl"></div>

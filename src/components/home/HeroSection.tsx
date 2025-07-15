@@ -23,7 +23,16 @@ const HeroSection: React.FC = () => {
       });
     }
   };
-  
+
+  const scrollToPopular = () => {
+    const popularSection = document.querySelector('[data-section="ai-popular-courses"]');
+    if (popularSection) {
+      popularSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
   const slides = [
     '/images/courses/AI1.jpg',
     '/images/courses/ai2.jpg',
@@ -142,7 +151,7 @@ const HeroSection: React.FC = () => {
             </div>
             
             <div className="hero-buttons flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <Button size="lg" className="text-base sm:text-lg px-6 sm:px-10 py-4 sm:py-7 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 relative overflow-hidden group shadow-lg hover:shadow-xl transition-all duration-300">
+              <Button size="lg" className="text-base sm:text-lg px-6 sm:px-10 py-4 sm:py-7 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 relative overflow-hidden group shadow-lg hover:shadow-xl transition-all duration-300" onClick={scrollToPopular}>
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <Play className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-3 relative z-10" />
                 <span className="relative z-10 font-semibold">Bắt đầu học ngay</span>
