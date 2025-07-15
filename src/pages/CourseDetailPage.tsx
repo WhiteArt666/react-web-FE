@@ -10,6 +10,7 @@ import { formatDuration } from '../lib/utils';
 import { Card, CardContent } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import LoadingSpinner from '../components/common/LoadingSpinner';
+import AddToCartButton from '../components/cart/AddToCartButton';
 import {
   CourseDetailHeader,
   CourseHero,

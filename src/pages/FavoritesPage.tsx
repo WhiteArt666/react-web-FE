@@ -24,6 +24,8 @@ const FavoritesPage: React.FC = () => {
   const emptyStateRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Scroll to top when component mounts
+    window.scrollTo(0, 0);
     if (headerRef.current) {
       // Animation cho header
       gsap.fromTo(headerRef.current,

@@ -4,6 +4,7 @@ import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 import { Card, CardContent } from '../ui/card';
 import { formatPrice } from '../../lib/utils';
+import AddToCartButton from '../cart/AddToCartButton';
 import { 
   Share2, 
   Download, 
@@ -57,6 +58,13 @@ const CourseSidebar: React.FC<CourseSidebarProps> = ({
           >
             Đăng ký học ngay
           </Button>
+
+          <AddToCartButton 
+            course={course}
+            size="lg"
+            className="w-full mb-3"
+            showText={true}
+          />
 
           <div className="flex gap-2">
             <Button variant="outline" className="flex-1">

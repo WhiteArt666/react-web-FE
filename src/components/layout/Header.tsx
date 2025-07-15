@@ -7,6 +7,7 @@ import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import { Search, Heart, Menu, User } from 'lucide-react';
 import SearchDropdown from '../common/SearchDropdown';
+import CartIcon from '../cart/CartIcon';
 import MobileMenu from './MobileMenu';
 
 const Header: React.FC = () => {
@@ -88,6 +89,12 @@ const Header: React.FC = () => {
             </Button>
             
             <div className="flex items-center space-x-2">
+              {/* Cart Button - Hidden on mobile, shown on larger screens */}
+              <CartIcon className="hidden sm:flex" />
+              
+              {/* Cart Button - Mobile only */}
+              <CartIcon className="sm:hidden" showText={false} />
+              
               {/* Favorites Button - Hidden on mobile, shown on larger screens */}
               <Button variant="ghost" className="relative hidden sm:flex" asChild>
                 <Link to="/favorites">

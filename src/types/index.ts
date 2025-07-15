@@ -84,3 +84,30 @@ export interface ApiResponse<T> {
   message?: string;
   pagination?: PaginationInfo;
 }
+
+// Cart types
+export interface CartItem {
+  id: string;
+  course: Course;
+  quantity: number;
+  addedAt: string;
+  price: number; // Giá tại thời điểm thêm vào giỏ
+}
+
+export interface Cart {
+  id: string;
+  userId?: string;
+  items: CartItem[];
+  totalAmount: number;
+  totalItems: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CartRecommendation {
+  courseId: string;
+  score: number;
+  reason: string;
+  type: 'complementary' | 'similar' | 'advanced' | 'beginner';
+  basedOnCourseId?: string;
+}

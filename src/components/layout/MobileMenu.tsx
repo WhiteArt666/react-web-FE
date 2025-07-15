@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { X, Home, BookOpen, Heart, User, LogOut } from 'lucide-react';
+import { X, Home, BookOpen, Heart, User, LogOut, ShoppingCart } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import { useAuth } from '../../contexts/AuthContext';
 import { useFavorites } from '../../contexts/FavoritesContext';
+import { useCart } from '../../contexts/CartContext';
 import { SignInButton, SignUpButton, UserButton } from '@clerk/clerk-react';
 
 interface MobileMenuProps {
@@ -15,6 +16,7 @@ interface MobileMenuProps {
 const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
   const { isAuthenticated, user } = useAuth();
   const { favoritesCount } = useFavorites();
+  const { cart } = useCart();
 
   // Prevent body scroll when menu is open
   useEffect(() => {
@@ -102,6 +104,25 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
             <Link to="/courses" onClick={onClose}>
               <BookOpen className="mr-2 h-4 w-4" />
               Danh Mục Khóa Học
+            </Link>
+          </Button>
+          
+          <Button 
+            variant="ghost" 
+            className="justify-start relative" 
+            asChild
+          >
+            <Link to="/cart" onClick={onClose}>
+              <ShoppingCart className="mr-2 h-4 w-4" />
+              Giỏ hàng
+              {cart.totalItems > 0 && (
+                <Badge 
+                  variant="destructive" 
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 h-5 w-5 rounded-full p-0 text-xs flex items-center justify-center"
+                >
+                  {cart.totalItems > 99 ? '99+' : cart.totalItems}
+                </Badge>
+              )}
             </Link>
           </Button>
           

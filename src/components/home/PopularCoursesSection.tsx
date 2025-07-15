@@ -1,7 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
-import { TrendingUp, Code, Palette, Music, Globe, Lightbulb } from 'lucide-react';
+import { TrendingUp, Code, Palette, Music, Globe, Lightbulb, ArrowRight } from 'lucide-react';
 import CourseGrid from '../course/CourseGrid';
 import { Course } from '../../types';
 
@@ -16,6 +17,11 @@ const PopularCoursesSection: React.FC<PopularCoursesSectionProps> = ({
   loading, 
   onCategoryClick 
 }) => {
+  const navigate = useNavigate();
+  
+  // Limit to maximum 12 courses
+  const displayedCourses = courses.slice(0, 12);
+  const hasMoreCourses = courses.length > 12;
   return (
     <section className="py-16 bg-background relative overflow-hidden">
       {/* Background decoration */}
@@ -56,9 +62,23 @@ const PopularCoursesSection: React.FC<PopularCoursesSectionProps> = ({
         </div>
         
         <CourseGrid 
-          courses={courses} 
+          courses={displayedCourses} 
           loading={loading}
         />
+        
+        {/* View More Button */}
+        {hasMoreCourses && (
+          <div className="text-center mt-8">
+            <Button 
+              onClick={() => navigate('/courses')}
+              size="lg"
+              className="group bg-gradient-to-r from-primary-600 to-purple-600 hover:from-orange-600 hover:to-red-600 text-white border-0 px-8 py-3"
+            >
+              Xem thêm khóa học
+              <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </div>
+        )}
         
         {/* Course categories quick access */}
         <div className="mt-12 text-center">

@@ -1,0 +1,74 @@
+/* Cart-specific styles using Tailwind utilities */
+
+/* Cart item animations */
+.cart-item-enter {
+  @apply opacity-0 transform scale-95;
+}
+
+.cart-item-enter-active {
+  @apply opacity-100 transform scale-100 transition-all duration-300;
+}
+
+.cart-item-exit {
+  @apply opacity-100 transform scale-100;
+}
+
+.cart-item-exit-active {
+  @apply opacity-0 transform scale-95 transition-all duration-300;
+}
+
+/* Cart summary sticky positioning */
+.cart-summary-sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 2rem;
+}
+
+/* Cart recommendation cards hover effects */
+.cart-recommendation-card {
+  @apply transition-all duration-200 hover:shadow-lg hover:-translate-y-1;
+}
+
+/* Cart badge pulse animation */
+.cart-badge-pulse {
+  animation: pulse-scale 2s infinite;
+}
+
+@keyframes pulse-scale {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Cart empty state */
+.cart-empty-state {
+  @apply flex flex-col items-center justify-center py-16 text-center;
+}
+
+/* Cart item quantity controls */
+.cart-quantity-controls {
+  @apply flex items-center border rounded-md bg-white;
+}
+
+.cart-quantity-button {
+  @apply h-8 w-8 p-0 hover:bg-gray-100 transition-colors duration-200;
+}
+
+/* Cart loading states */
+.cart-loading-skeleton {
+  @apply animate-pulse bg-gray-200 rounded;
+}
+
+/* Cart mobile responsiveness */
+@media (max-width: 640px) {
+  .cart-item-mobile {
+    @apply flex-col space-y-3;
+  }
+  
+  .cart-summary-mobile {
+    @apply sticky bottom-0 left-0 right-0 border-t bg-white p-4 shadow-lg;
+  }
+}

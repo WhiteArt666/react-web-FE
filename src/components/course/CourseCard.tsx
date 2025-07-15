@@ -10,6 +10,7 @@ import { Card, CardContent, CardFooter, CardHeader } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 import { Heart, Clock, Star, User, BookOpen } from 'lucide-react';
+import AddToCartButton from '../cart/AddToCartButton';
 
 interface CourseCardProps {
   course: Course;
@@ -26,7 +27,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onCourseClick, viewMode
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    
+
     if (isCourseFavorite) {
       removeFromFavorites(course.id);
       showToast(`Đã xóa "${course.title}" khỏi danh sách yêu thích`, 'success', 2500);
@@ -49,7 +50,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onCourseClick, viewMode
     if (user) {
       courseService.saveUserBehavior(user.id, 'view', course.id);
     }
-    
+
     // Nếu có callback từ parent component thì gọi nó
     if (onCourseClick) {
       onCourseClick(course);
@@ -88,14 +89,14 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onCourseClick, viewMode
   // Grid view (default)
   if (viewMode === 'grid') {
     return (
-      <Card 
+      <Card
         className="group cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1 h-full flex flex-col overflow-hidden"
         onClick={handleCourseClick}
       >
         <div className="relative">
           <div className="aspect-video w-full overflow-hidden">
-            <img 
-              src={course.thumbnail} 
+            <img
+              src={course.thumbnail}
               alt={course.title}
               className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               onError={(e) => {
@@ -103,23 +104,22 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onCourseClick, viewMode
               }}
             />
           </div>
-          
+
           {/* Overlay with favorite button */}
           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300">
-            <Button 
+            <Button
               variant="ghost"
               size="icon"
-              className={`absolute top-3 right-3 w-9 h-9 rounded-full transition-all duration-200 ${
-                isCourseFavorite 
-                  ? 'bg-white text-red-500 hover:bg-white/90' 
+              className={`absolute top-3 right-3 w-9 h-9 rounded-full transition-all duration-200 ${isCourseFavorite
+                  ? 'bg-white text-red-500 hover:bg-white/90'
                   : 'bg-white/80 text-gray-600 hover:bg-white hover:text-red-500'
-              }`}
+                }`}
               onClick={handleFavoriteClick}
             >
               <Heart className={`w-4 h-4 ${isCourseFavorite ? 'fill-current' : ''}`} />
             </Button>
           </div>
-          
+
           {/* Popular badge */}
           {course.isPopular && (
             <Badge className="absolute top-3 left-3 bg-gradient-to-r from-orange-500 to-red-500 text-white border-0">
@@ -137,7 +137,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onCourseClick, viewMode
               {getLevelText(course.level)}
             </Badge>
           </div>
-          
+
           <h3 className="font-semibold text-lg leading-tight line-clamp-2 group-hover:text-primary transition-colors">
             {course.title}
           </h3>
@@ -147,12 +147,12 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onCourseClick, viewMode
           <p className="text-sm text-muted-foreground line-clamp-3 mb-4">
             {course.description}
           </p>
-          
+
           <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
             <User className="w-4 h-4" />
             <span className="truncate">{course.instructor}</span>
           </div>
-          
+
           <div className="flex items-center justify-between text-sm text-muted-foreground mb-4">
             <div className="flex items-center gap-1">
               <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
@@ -164,7 +164,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onCourseClick, viewMode
               <span>{formatDuration(course.duration)}</span>
             </div>
           </div>
-          
+
           <div className="flex flex-wrap gap-1 mb-2">
             {course.tags.slice(0, 3).map((tag, index) => (
               <Badge key={index} variant="secondary" className="text-xs px-2 py-1">
@@ -186,15 +186,35 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onCourseClick, viewMode
                 {formatPrice(course.price)}
               </span>
             </div>
-            
-            <Button 
-              size="sm" 
+
+            <Button
+              size="sm"
               className="bg-gradient-to-r from-primary-600 to-purple-600 hover:from-primary-700 hover:to-purple-700 text-white shadow-md hover:shadow-lg transition-all duration-200 flex-shrink-0"
             >
               <BookOpen className="w-4 h-4 mr-1" />
               <span className="whitespace-nowrap">Xem chi tiết</span>
             </Button>
           </div>
+
+          {/* <div className="flex items-center justify-between gap-2 w-full">
+            <AddToCartButton 
+              course={course}
+              size="sm"
+              className="flex-1"
+              showText={true}
+            />
+            
+            <Button
+              size="sm"
+              variant="outline"
+              className={`transition-all duration-200 ${
+                isCourseFavorite ? 'text-red-600 hover:text-red-700' : 'text-gray-600 hover:text-gray-700'
+              }`}
+              onClick={handleFavoriteClick}
+            >
+              <Heart className={`w-4 h-4 ${isCourseFavorite ? 'fill-current' : ''}`} />
+            </Button>
+          </div> */}
         </CardFooter>
       </Card>
     );
@@ -202,15 +222,15 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onCourseClick, viewMode
 
   // List view
   return (
-    <Card 
+    <Card
       className="group cursor-pointer transition-all duration-300 hover:shadow-lg overflow-hidden"
       onClick={handleCourseClick}
     >
       <div className="flex flex-col sm:flex-row">
         <div className="relative w-full sm:w-48 md:w-56 lg:w-64 flex-shrink-0">
           <div className="aspect-video w-full overflow-hidden">
-            <img 
-              src={course.thumbnail} 
+            <img
+              src={course.thumbnail}
               alt={course.title}
               className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               onError={(e) => {
@@ -218,7 +238,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onCourseClick, viewMode
               }}
             />
           </div>
-          
+
           {/* Popular badge */}
           {course.isPopular && (
             <Badge className="absolute top-3 left-3 bg-gradient-to-r from-orange-500 to-red-500 text-white border-0">
@@ -237,28 +257,27 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onCourseClick, viewMode
                 {getLevelText(course.level)}
               </Badge>
             </div>
-            <Button 
+            <Button
               variant="ghost"
               size="icon"
-              className={`w-9 h-9 rounded-full transition-all duration-200 flex-shrink-0 ${
-                isCourseFavorite 
-                  ? 'text-red-500 hover:bg-red-50' 
+              className={`w-9 h-9 rounded-full transition-all duration-200 flex-shrink-0 ${isCourseFavorite
+                  ? 'text-red-500 hover:bg-red-50'
                   : 'text-gray-400 hover:text-red-500 hover:bg-red-50'
-              }`}
+                }`}
               onClick={handleFavoriteClick}
             >
               <Heart className={`w-4 h-4 ${isCourseFavorite ? 'fill-current' : ''}`} />
             </Button>
           </div>
-          
+
           <h3 className="font-semibold text-lg sm:text-xl mb-2 group-hover:text-primary transition-colors line-clamp-2">
             {course.title}
           </h3>
-          
+
           <p className="text-gray-600 mb-3 line-clamp-2 text-sm sm:text-base">
             {course.description}
           </p>
-          
+
           <div className="flex flex-wrap items-center gap-3 sm:gap-6 text-sm text-gray-500 mb-4">
             <div className="flex items-center gap-1">
               <User className="w-4 h-4" />
@@ -291,13 +310,15 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onCourseClick, viewMode
                 </Badge>
               )}
             </div>
-            
-            <Button 
-              className="bg-gradient-to-r from-primary-600 to-purple-600 hover:from-primary-700 hover:to-purple-700 text-white shadow-md hover:shadow-lg transition-all duration-200 w-full sm:w-auto whitespace-nowrap px-4 py-2 self-start"
-            >
-              <BookOpen className="w-4 h-4 mr-2" />
-              Xem chi tiết
-            </Button>
+
+            <div className="flex justify-end items-center gap-2">
+              <Button
+                className="bg-gradient-to-r from-primary-600 to-purple-600 hover:from-primary-700 hover:to-purple-700 text-white shadow-md hover:shadow-lg transition-all duration-200 whitespace-nowrap px-4 py-2"
+              >
+                <BookOpen className="w-4 h-4 mr-2" />
+                Xem chi tiết
+              </Button>
+            </div>
           </div>
         </div>
       </div>

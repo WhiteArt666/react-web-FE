@@ -25,9 +25,9 @@ const HeroSection: React.FC = () => {
   };
   
   const slides = [
-    '/images/courses/20250212_BWEjSujucS.jpeg',
-    '/images/courses/20250212_BWEjSujucS.jpeg',
-    '/images/courses/20250212_BWEjSujucS.jpeg',
+    '/images/courses/AI1.jpg',
+    '/images/courses/ai2.jpg',
+    '/images/courses/ai3.jpg',
   ];
 
   useEffect(() => {
