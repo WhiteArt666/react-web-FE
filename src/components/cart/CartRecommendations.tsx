@@ -133,7 +133,7 @@ const CartRecommendations: React.FC<CartRecommendationsProps> = ({ className = '
             return (
               <Card key={rec.courseId} className="overflow-hidden hover:shadow-lg transition-shadow">
                 <div className="relative">
-                  <Link to={`/courses/${course.id}`}>
+                  <Link to={`/course/${course.id}`}>
                     <img
                       src={course.thumbnail}
                       alt={course.title}

@@ -294,7 +294,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onCourseClick, viewMode
             </div>
           </div>
 
-          <div className="flex flex-col gap-3 mt-auto">
+          <div className="flex items-center justify-between gap-4 mt-auto">
             <div className="flex items-center gap-2 flex-wrap">
               <span className="text-xl sm:text-2xl font-bold text-primary">
                 {formatPrice(course.price)}
@@ -311,14 +311,12 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onCourseClick, viewMode
               )}
             </div>
 
-            <div className="flex justify-end items-center gap-2">
-              <Button
-                className="bg-gradient-to-r from-primary-600 to-purple-600 hover:from-primary-700 hover:to-purple-700 text-white shadow-md hover:shadow-lg transition-all duration-200 whitespace-nowrap px-4 py-2"
-              >
-                <BookOpen className="w-4 h-4 mr-2" />
-                Xem chi tiết
-              </Button>
-            </div>
+            <Button
+              className="bg-gradient-to-r from-primary-600 to-purple-600 hover:from-primary-700 hover:to-purple-700 text-white shadow-md hover:shadow-lg transition-all duration-200 whitespace-nowrap px-4 py-2 flex-shrink-0"
+            >
+              <BookOpen className="w-4 h-4 mr-2" />
+              Xem chi tiết
+            </Button>
           </div>
         </div>
       </div>

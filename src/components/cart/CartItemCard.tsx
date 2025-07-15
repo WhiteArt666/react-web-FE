@@ -61,7 +61,7 @@ const CartItemCard: React.FC<CartItemCardProps> = ({ item, className = '' }) => 
         <div className="flex flex-col sm:flex-row gap-4">
           {/* Thumbnail */}
           <div className="flex-shrink-0">
-            <Link to={`/courses/${course.id}`}>
+            <Link to={`/course/${course.id}`}>
               <img
                 src={course.thumbnail}
                 alt={course.title}
@@ -75,7 +75,7 @@ const CartItemCard: React.FC<CartItemCardProps> = ({ item, className = '' }) => 
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
               <div className="flex-1">
                 <Link 
-                  to={`/courses/${course.id}`} 
+                  to={`/course/${course.id}`} 
                   className="block group"
                 >
                   <h3 className="text-lg font-semibold text-gray-900 group-hover:text-primary-600 transition-colors line-clamp-2">
