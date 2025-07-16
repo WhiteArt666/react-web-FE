@@ -47,50 +47,17 @@ const Footer: React.FC = () => {
             </div>
           </div>
           
-          {/* Quick Links */}
-          <div className="space-y-3 sm:space-y-4">
-            <h4 className="text-base sm:text-lg font-semibold text-white">Khóa học</h4>
-            <ul className="space-y-2 sm:space-y-3">
-              {['Lập trình', 'Thiết kế', 'Marketing', 'Kinh doanh', 'Khoa học dữ liệu', 'Công nghệ'].map((item) => (
-                <li key={item}>
-                  <a 
-                    href="#" 
-                    className="text-gray-300 hover:text-primary-400 transition-colors duration-200 hover:underline text-sm"
-                  >
-                    {item}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-          
-          {/* Company */}
-          <div className="space-y-3 sm:space-y-4">
-            <h4 className="text-base sm:text-lg font-semibold text-white">Công ty</h4>
-            <ul className="space-y-2 sm:space-y-3">
-              {['Về chúng tôi', 'Tuyển dụng', 'Liên hệ', 'Đối tác', 'Tin tức', 'Blog'].map((item) => (
-                <li key={item}>
-                  <a 
-                    href="#" 
-                    className="text-gray-300 hover:text-primary-400 transition-colors duration-200 hover:underline text-sm"
-                  >
-                    {item}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-          
-          {/* Support & Newsletter */}
-          <div className="space-y-4 sm:space-y-6">
+          {/* Mobile: 3 columns in one row, Desktop: separate columns */}
+          <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-3 gap-2 sm:gap-4 lg:gap-8">
+            {/* Quick Links */}
             <div className="space-y-3 sm:space-y-4">
-              <h4 className="text-base sm:text-lg font-semibold text-white">Hỗ trợ</h4>
-              <ul className="space-y-2 sm:space-y-3">
-                {['Trung tâm trợ giúp', 'Điều khoản', 'Bảo mật', 'FAQ'].map((item) => (
+              <h4 className="text-sm sm:text-base lg:text-lg font-semibold text-white">Khóa học</h4>
+              <ul className="space-y-1 sm:space-y-2 lg:space-y-3">
+                {['Lập trình', 'Thiết kế', 'Marketing', 'Kinh doanh', 'Khoa học dữ liệu', 'Công nghệ'].map((item) => (
                   <li key={item}>
                     <a 
                       href="#" 
-                      className="text-gray-300 hover:text-primary-400 transition-colors duration-200 hover:underline text-sm"
+                      className="text-gray-300 hover:text-primary-400 transition-colors duration-200 hover:underline text-xs sm:text-sm"
                     >
                       {item}
                     </a>
@@ -99,7 +66,43 @@ const Footer: React.FC = () => {
               </ul>
             </div>
             
-            {/* Newsletter */}
+            {/* Company */}
+            <div className="space-y-3 sm:space-y-4">
+              <h4 className="text-sm sm:text-base lg:text-lg font-semibold text-white">Công ty</h4>
+              <ul className="space-y-1 sm:space-y-2 lg:space-y-3">
+                {['Về chúng tôi', 'Tuyển dụng', 'Liên hệ', 'Đối tác', 'Tin tức', 'Blog'].map((item) => (
+                  <li key={item}>
+                    <a 
+                      href="#" 
+                      className="text-gray-300 hover:text-primary-400 transition-colors duration-200 hover:underline text-xs sm:text-sm"
+                    >
+                      {item}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            {/* Support */}
+            <div className="space-y-3 sm:space-y-4">
+              <h4 className="text-sm sm:text-base lg:text-lg font-semibold text-white">Hỗ trợ</h4>
+              <ul className="space-y-1 sm:space-y-2 lg:space-y-3">
+                {['Trung tâm trợ giúp', 'Điều khoản', 'Bảo mật', 'FAQ'].map((item) => (
+                  <li key={item}>
+                    <a 
+                      href="#" 
+                      className="text-gray-300 hover:text-primary-400 transition-colors duration-200 hover:underline text-xs sm:text-sm"
+                    >
+                      {item}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          
+          {/* Newsletter - Full width on mobile, positioned separately */}
+          <div className="mt-6 lg:mt-0">
             <Card className="bg-white/5 border-white/10 p-3 sm:p-4">
               <h5 className="font-semibold mb-2 sm:mb-3 text-white text-sm sm:text-base">Đăng ký nhận tin</h5>
               <p className="text-gray-400 text-xs sm:text-sm mb-2 sm:mb-3">
